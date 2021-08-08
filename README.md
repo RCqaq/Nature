@@ -5,4 +5,4 @@ Belongs to the Series "**Universe**".
 
 # License #
 
-MIT License. See https://github.com/RCqaq/Nature/blob/master/LICENSE.
+MIT License. See LICENSE for details.
