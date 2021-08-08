@@ -34,7 +34,7 @@ credits="Me who coded this mod." #optional
 authors="RCqaq_" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-Nature, mod built for realistic experience about nature for Minecraft.
+Nature, a mod built for realistic experience about nature in Minecraft.
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.nature]] #optional
