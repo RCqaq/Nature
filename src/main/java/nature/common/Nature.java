@@ -1,9 +1,12 @@
-package com.rcqaq.nature;
+package nature.common;
 
-import net.minecraft.world.level.block.Block;
+import nature.common.registries.NatureItems;
+import nature.common.tabs.TabBotanic;
+import nature.common.tabs.TabGeologic;
+import nature.common.tabs.TabZoological;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
@@ -17,31 +20,36 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.stream.Collectors;
 
-// The value here should match an entry in the META-INF/mods.toml file
 @Mod(Nature.MODID)
 public class Nature
 {
     public static final String MODID = "nature";
     public static final String MOD_NAME = "Nature";
+    public static final TabBotanic tabBotanic = new TabBotanic();
+    public static final TabGeologic tabGeologic = new TabGeologic();
+    public static final TabZoological tabzoological = new TabZoological();
+
+
+    private static final Logger LOGGER = LogManager.getLogger(MOD_NAME);
 
     public static Nature instance;
-
-    // Directly reference a log4j logger.
-    private static final Logger LOGGER = LogManager.getLogger(MOD_NAME);
 
     public Nature()
     {
         instance = this;
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Register the setup method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        modEventBus.addListener(this::setup);
         // Register the enqueueIMC method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
+        modEventBus.addListener(this::enqueueIMC);
         // Register the processIMC method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
+        modEventBus.addListener(this::processIMC);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+
+        NatureItems.ITEMS.register(modEventBus);
     }
 
     private void setup(final FMLCommonSetupEvent event)
@@ -54,7 +62,7 @@ public class Nature
     private void enqueueIMC(final InterModEnqueueEvent event)
     {
         // some example code to dispatch IMC to another mod
-        InterModComms.sendTo("nature", "nature", () -> { LOGGER.info("Hello world from the MDK"); return "Hello world";});
+        InterModComms.sendTo(MODID, MODID, () -> { LOGGER.info("Hello world from the MDK"); return "Hello world";});
     }
 
     private void processIMC(final InterModProcessEvent event)
@@ -70,18 +78,5 @@ public class Nature
     {
         // do something when the server starts
         LOGGER.info("HELLO from server starting");
-    }
-
-    // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
-    // Event bus for receiving Registry Events)
-    @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
-    public static class RegistryEvents
-    {
-        @SubscribeEvent
-        public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent)
-        {
-            // register a new block here
-            LOGGER.info("HELLO from Register Block");
-        }
     }
 }
