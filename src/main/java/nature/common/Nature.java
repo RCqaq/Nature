@@ -29,7 +29,6 @@ public class Nature
     public static final TabGeologic tabGeologic = new TabGeologic();
     public static final TabZoological tabzoological = new TabZoological();
 
-
     private static final Logger LOGGER = LogManager.getLogger(MOD_NAME);
 
     public static Nature instance;
