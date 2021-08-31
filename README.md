@@ -5,4 +5,4 @@ Belongs to the Series "**Universe**".
 
 # License #
 
-MIT License. See LICENSE for details.
+MIT License. See LICENSE for detail.
